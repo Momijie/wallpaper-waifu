@@ -27,113 +27,13 @@
      ▀███▀███▀    ███    █▀  █▀     ███        ████████▀
 '''
 
-import argparse
 import math
 import os
 import sys, subprocess
 import random
+import arguments
+
 from PIL import Image, ImageDraw, ImageColor, ImageOps
-
-prog_name = 'wallpaper-gen'
-description = 'Creeates a kawaii-waifu wallpaper!'
-version = '0.1.0'
-arguments = [
-        (('filename'), {
-            'type' : str,
-            'help' : 'filename of wallpaper'
-        }),
-        (('-r', '--rect'), {
-            'type' : str,
-            'nargs' : 2,
-            'metavar' : ('WIDTH', 'HEIGHT'),
-            'default' : [1920,1080],
-            'help' : 'set width and height of wallpaper'
-        }),
-        (('-c', '--color'), {
-            'type' : str,
-            'default' : '#1E1E2E',
-            'help' : 'set color of wallpaper background'
-        }),
-        (('-waifu', '--waifu'), {
-            'type' : str,
-            'metavar' : 'PATH',
-            'default' : './.default/satori.png',
-            'help' : 'path of waifu'
-        }),
-        (('-p', '--position'), {
-            'type' : str,
-            'metavar' : 'POS',
-            'default' : 'bottom-right',
-            'help' : 'Position of waifu'
-        }),
-        (('-o', '--offset'), {
-            'type' : int,
-            'nargs' : 2,
-            'metavar' : ('X', 'Y'),
-            'default' : [0,0],
-            'help' :'set offset of waifu'
-        }),
-        (('-a', '--angle'), {
-            'type' : int,
-            'metavar' : 'ANGLE',
-            'default' : 0,
-            'help' : 'The angle the waifu should be rotated by'
-        }),
-        (('-v', '--version'), {
-            'action' : 'version',
-            'version' : '{} {}'.format('%(prog)s',version),
-            'help' : 'show version number of %(prog)s'
-        }),
-        (('-d','--debug'), {
-            'action' : 'store_true',
-            'help' : 'show debug information of %(prog)s'
-        }),
-        (('-f','--flip'), {
-            'action' : 'store_true',
-            'help' : 'flips waifu image'
-        }),
-        (('-s', '--show'), {
-            'action' : 'store_true',
-            'help' : 'show the wallpaper after it\'s created'
-        }),
-        (('--ornament'),{
-            'type' : str,
-            'metavar' : 'ORNAMENT',
-            'default' : './.default/star.png',
-            'help' : 'ornament'
-        }),
-         (('--ornament_num'),{
-            'type' : int,
-            'metavar' : 'ORNAMENT_NUM',
-            'default' : 500,
-            'help' : 'ornament'
-        }),
-         (('--ornament_samples'),{
-            'type' : int,
-            'metavar' : 'ORNAMENT_SAMPLES',
-            'default' : 5,
-            'help' : 'ornament'
-        }),
-         (('--ornament_minimum_distance'),{
-            'type' : int,
-            'metavar' : 'ORNAMENT_MINIMUM_DISTANCE',
-            'default' : 100,
-            'help' : 'ornament'
-        })
-    ]
-
-def parser_wrapper(parser, args):
-    if (type(args[0]) == str):
-        parser.add_argument(args[0],**args[1])
-    else:
-        parser.add_argument(*args[0],**args[1])
-
-def parser_args():
-    parser = argparse.ArgumentParser(prog=prog_name, description=description)
-
-    for args in arguments : parser_wrapper(parser,args)
-
-    return parser.parse_args()
 
 def rotate_image(angle, image):
     return image.rotate(angle, expand=True)
@@ -272,7 +172,7 @@ def create_wallpaper(args, width, height, color, filename):
 
     show(args, filename)
 def main() -> int:
-    args = parser_args()
+    args = arguments.Arguments().parser_args()
     if(args.debug):
         print(args)
     create_wallpaper(args, args.rect[0], args.rect[1], args.color, args.filename)
