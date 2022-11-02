@@ -72,19 +72,19 @@ class Arguments:
                 (('--ornament_num'),{
                     'type' : int,
                     'metavar' : 'ORNAMENT_NUM',
-                    'default' : 500,
+                    'default' : 1000,
                     'help' : 'ornament'
                 }),
                 (('--ornament_samples'),{
                     'type' : int,
                     'metavar' : 'ORNAMENT_SAMPLES',
-                    'default' : 5,
+                    'default' : 20,
                     'help' : 'ornament'
                 }),
                 (('--ornament_minimum_distance'),{
                     'type' : int,
                     'metavar' : 'ORNAMENT_MINIMUM_DISTANCE',
-                    'default' : 100,
+                    'default' : 75,
                     'help' : 'ornament'
                 })
             ]

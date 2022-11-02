@@ -72,18 +72,9 @@ def points_generation(
     return points
 
 def point_sample_comparison(points,samples,minimum_distance):
-    rtrn = []
-    sample_it = 0
-    for point in points:
-        for sample in samples:
-            if distance(point,sample) < minimum_distance:
-                del samples[sample_it]
-            sample_it += 1
-        sample_it = 0
-    rtrn = samples
-
-    return rtrn
-
+    return [sample for sample in samples if all([distance(
+        point,sample) >= minimum_distance for point in points])]
+        
 # get a list (or singular point) of random points
 # on a rectangle of defined width and height
 def get_random(sample_size, width, height):
